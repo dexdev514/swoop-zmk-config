@@ -46,7 +46,7 @@
                 // Bottom row right hand
                 &kp N         &kp M         &kp COMMA    &kp DOT      &lt MEDIA FSLH
                 // Thumb cluster left
-                ___           &kp SPACE     &hm LMETA LS(APOSTROPHE)
+                ___           &kp SPACE     &hm ENTER
                 // Thumb cluster right
                 &kp BSPC      &hm RMETA ESC ___
             >;
