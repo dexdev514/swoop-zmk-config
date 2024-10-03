@@ -44,9 +44,9 @@
                 // Bottom row left hand
                 &lt MEDIA Z   &kp X         &kp C        &kp V        &kp B
                 // Bottom row right hand
-                &kp N         &kp M         &kp COMMA    &kp DOT      &lt MEDIA FSLH
+                &kp N         &kp M         &kp COMMA    &kp DOT      &kp /
                 // Thumb cluster left
-                ___           &kp SPACE     &hm ENTER
+                ___           &kp SPACE     &kp ENTER
                 // Thumb cluster right
                 &kp BSPC      &hm RMETA ESC ___
             >;
