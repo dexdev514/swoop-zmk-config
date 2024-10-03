@@ -2,17 +2,14 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/rgb.h>
 
-#define ___ &trans
+#define &trans &trans
 
 #define DEFAULT 0
 #define NUM     1
 #define NUMPAD  2
 #define MEDIA   3
-
-&caps_word {
-    continue-list = <UNDERSCORE MINUS>;
-};
 
 / {
     behaviors {
@@ -46,9 +43,9 @@
                 // Bottom row right hand
                 &kp N         &kp M         &kp COMMA    &kp DOT      &lt MEDIA FSLH
                 // Thumb cluster left
-                ___           &kp SPACE     &hm LMETA LS(APOSTROPHE)
+                &trans        &hm LMETA LS(APOSTROPHE) &kp SPACE
                 // Thumb cluster right
-                &kp BSPC      &hm RMETA ESC ___
+                &kp BSPC &hm RMETA ESC                 &trans
             >;
         };
 
@@ -59,17 +56,17 @@
                 // Top row right hand
                 &kp NUMBER_6  &kp NUMBER_7 &kp NUMBER_8 &kp NUMBER_9 &kp NUMBER_0
                 // Middle row left hand
-                ___           ___          ___          ___          &kp GRAVE
+                &trans        &trans       &trans       &trans       &kp GRAVE
                 // Middle row right hand
-                &kp MINUS     ___          ___          ___          ___
+                &kp MINUS     &trans       &trans       &trans       &trans
                 // Bottom row left hand
                 &kp LEFT       &kp RIGHT   &kp DOWN     &kp UP       &kp APOSTROPHE
                 // Bottom row right hand
-                &kp EQUAL      &kp LBKT    &kp RBKT     &kp BSLH     &to NUMPAD
+                &kp EQUAL      &kp LBKT    &kp RBKT     &kp BSLH     &to_numpad_with_color
                 // Thumb cluster left
-                ___           ___          ___
+                &trans         &trans      &trans
                 // Thumb cluster right
-                ___           ___          ___
+                &trans         &trans      &trans
             >;
         };
 
@@ -82,36 +79,36 @@
                 // Middle row left hand
                 &kp F6         &kp F7    &kp F8    &kp F9    &kp F10
                 // Middle row right hand
-                ___            &kp KP_N4 &kp KP_N5 &kp KP_N6 &kp KP_PLUS
+                &trans         &kp KP_N4 &kp KP_N5 &kp KP_N6 &kp KP_PLUS
                 // Bottom row left hand
-                &kp F11        &kp F10   ___       ___       ___
+                &kp F11        &kp F10   &trans    &trans    &trans
                 // Bottom row right hand
-                ___            &kp KP_N1 &kp KP_N2 &kp KP_N3 &to DEFAULT
+                &trans         &kp KP_N1 &kp KP_N2 &kp KP_N3 &to_default_with_color
                 // Thumb cluster left
-                ___            ___       ___
+                &trans         &trans    &trans
                 // Thumb cluster right
-                ___            &kp KP_N0 &kp KP_DOT
+                &trans         &kp KP_N0 &kp KP_DOT
             >;
         };
 
         media_layer {
             bindings = <
                 // Top row left hand
-                ___ ___            ___          ___                 ___
+                &bt BT_CLR_ALL &bt BT_PRV   &bt BT_NXT   &trans             &trans
                 // Top row right hand
-                ___ ___            ___          ___                 ___
+                &trans         &trans       &trans       &trans             &trans
                 // Middle row left hand
-                ___ ___            ___          ___                 ___
+                &trans         &trans       &trans       &bootloader        &sys_reset
                 // Middle row right hand
-                ___ ___            ___          ___                 ___
+                &sys_reset     &bootloader  &trans       &trans             &trans
                 // Bottom row left hand
-                ___ &kp K_VOL_DN &kp K_VOL_UP &kp K_PLAY_PAUSE    &mt K_PREV K_NEXT
+                &trans         &kp K_VOL_DN &kp K_VOL_UP &kp K_PLAY_PAUSE   &mt K_PREV K_NEXT
                 // Bottom row right hand
-                ___ &mt HOME END   &mt DEL INS  &mt CAPSLOCK SYSREQ ___
+                &trans         &mt END HOME &mt INS DEL  &mt CAPSLOCK PSCRN &trans
                 // Thumb cluster left
-                ___                ___          ___
+                &trans            &trans        &trans
                 // Thumb cluster right
-                ___                ___          ___
+                &trans            &trans        &trans
             >;
         };
 
@@ -121,6 +118,16 @@
 
 / {
     macros {
+        to_numpad_with_color: to_numpad_with_color {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&rgb_ug RGB_COLOR_HSB(50,100,70)>, <&to NUMPAD>;
+        };
+        to_default_with_color: to_default_with_color {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&rgb_ug RGB_COLOR_HSB(250,60,70)>, <&to DEFAULT>;
+        };
         macro_ae: macro_ae {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -129,12 +136,12 @@
         macro_oe: macro_oe {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp RALT>, <&kp LS(Z)>, <&kp O>;
+            bindings = <&kp RALT>, <&kp LS(Z)>, <&kp S>;
         };
         macro_ue: macro_ue {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp RALT>, <&kp LS(Z)>, <&kp U>;
+            bindings = <&kp RALT>, <&kp LS(Z)>, <&kp F>;
         };
         macro_ss: macro_ss {
             compatible = "zmk,behavior-macro";
@@ -177,5 +184,14 @@
             key-positions = <2 19>;
             bindings = <&macro_ss>;
         };
+        combo_vscode_term {
+            timeout-ms = <50>;
+            key-positions = <11 12>;
+            bindings = <&kp LC(GRAVE)>;
+        };
     };
+};
+
+&led_strip {
+    chain-length = <36>;
 };
